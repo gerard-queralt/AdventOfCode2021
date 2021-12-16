@@ -51,6 +51,7 @@ if __name__ == "__main__":
         filter_digit = 1 if count_zeros[current_digit] > count_ones[current_digit] else 0
         filtered_CO2 = list(filter(lambda n: n[current_digit] == str(filter_digit), filtered_CO2))
         current_digit += 1
+        count_zeros, count_ones = count_zeros_and_ones(filtered_CO2)
 
     oxygen = 0
     CO2 = 0
