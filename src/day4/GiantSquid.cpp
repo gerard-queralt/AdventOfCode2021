@@ -158,7 +158,6 @@ int main()
             r = 0;
         }
     }
-    prettyPrintVecOfBoards(boards);
     firstToWin(numbers, copy(boards));
     lastToWin(numbers, copy(boards));
 }
