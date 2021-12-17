@@ -52,5 +52,5 @@ fun main() {
     println("Horizontal: $horPos2")
     println("Depth: $depth2")
     println("Aim: $aim")
-    println("Part 1: " + horPos2 * depth2)
+    println("Part 2: " + horPos2 * depth2)
 }
