@@ -18,24 +18,33 @@ insertCoords :: Integer -> Integer -> Integer -> Integer -> [[String]] -> [[Stri
 insertCoords x1 y1 x2 y2 hydroMap = populate 0 0 hydroMap
     where
         populate curX curY (row:curMap)
-            | curX == x2 && curY == y2 = (row:curMap)
-            | curX >= x1 && curY >= y1 = ((incrementCount (row:curMap)):row):next
-            | otherwise = (".":row):next
+            | curX == x2 && curY == y2 = ((incrementCount (row:curMap)):(tail row)):curMap
+            | curX >= x1 && curY >= y1 = ((incrementCount (row:curMap)):(tail row)):next
+            | otherwise = next
                 where
                     next = populate newX newY $ advance curX curY (row:curMap)
                     newX = if curX == x2 then 0 else curX + 1
                     newY = if newX == 0 then curY + 1 else curY
+        populate curX curY curMap
+            | curX == x2 && curY == y2 = ((incrementCount curMap):[]):curMap
+            | otherwise = curMap
+        
+        incrementCount ([]) = "1" --tmp, just so it compiles
+        incrementCount ([]:curMap) = "1"
         incrementCount (([]:row):curMap) = "1"
         incrementCount ((column:row):curMap)
             | column == "." = "1"
             | otherwise = show (1 + read(column)::Integer)
+        
         advance curX curY (row:curMap) = if curX == x2 then curMap else if null row then ([]:curMap) else ((tail row):curMap)
 
 main :: IO ()
 main = do
     inputFile <- readFile "input.txt"
     let inputLines = lines inputFile
-    let hydroMap = drawHydroMap inputLines [[".",".","."],[".",".","."],[".",".","."]]
+    let tmp = [[".","."]]
+    let hydroMap = drawHydroMap inputLines tmp
+    mapM_ printRow tmp
     mapM_ printRow hydroMap
 
 printRow :: [String] -> IO ()
