@@ -1,4 +1,5 @@
 import Data.List.Split --sudo apt-get install libghc-split-dev
+import Data.List
 
 initializeMap :: [String] -> [[String]]
 initializeMap cl = initializedMap
@@ -38,14 +39,17 @@ insertCoords x1 y1 x2 y2 hydroMap = if x1 == x2 || y1 == y2 then populateHorVer 
         populateHorVer = populateMapHorVer 0 0 hydroMap
             where
                 ((minX, minY),(maxX, maxY)) = ((min x1 x2, min y1 y2),(max x1 x2, max y1 y2))
+                
                 populateMapHorVer _ _ [] = []
                 populateMapHorVer curX curY (row:curMap)
                     | curY > maxY = (row:curMap)
                     | otherwise = (populateRow curX curY row):(populateMapHorVer curX (curY + 1) curMap)
+                
                 populateRow _ _ [] = []
                 populateRow curX curY (column:row)
                     | curX > maxX = (column:row)
                     | otherwise = (populateColumn curX curY column):(populateRow (curX + 1) curY row)
+                
                 populateColumn _ _ [] = []
                 populateColumn curX curY column = if minX <= curX && curX <= maxX && 
                                                     minY <= curY && curY <= maxY
@@ -56,6 +60,7 @@ insertCoords x1 y1 x2 y2 hydroMap = if x1 == x2 || y1 == y2 then populateHorVer 
             where
                 ((minX, minY),(maxX, maxY)) = if y1 < y2 then ((x1, y1),(x2, y2)) else ((x2, y2),(x1, y1))
                 incOrDecX = if minX < maxX then (\x -> x + 1) else (\x -> x - 1)
+                
                 populateMapDia _ _ _ [] = []
                 populateMapDia curX curY (targetX, targetY) (row:curMap)
                     | curY > maxY = (row:curMap)
@@ -63,10 +68,12 @@ insertCoords x1 y1 x2 y2 hydroMap = if x1 == x2 || y1 == y2 then populateHorVer 
                                      then row:(populateMapDia curX (curY + 1) (targetX, targetY) curMap)
                                      else newRow:(populateMapDia curX (curY + 1) (incOrDecX targetX, targetY + 1) curMap)
                                      where newRow = (populateRow curX curY (targetX, targetY) row)
+                
                 populateRow _ _ _ [] = []
                 populateRow curX curY (targetX, targetY) (column:row)
                     | curX > targetX = (column:row)
                     | otherwise = (populateColumn curX curY (targetX, targetY) column):(populateRow (curX + 1) curY (targetX, targetY) row)
+                
                 populateColumn _ _ _ [] = []
                 populateColumn curX curY (targetX, targetY) column = if curX == targetX &&
                                                                         curY == targetY
@@ -77,15 +84,8 @@ insertCoords x1 y1 x2 y2 hydroMap = if x1 == x2 || y1 == y2 then populateHorVer 
             | column == "." = "1"
             | otherwise = show((read column :: Integer) + 1)
             
-countOverlap :: [[String]] -> Integer
-countOverlap hydroMap = countOverlapRec hydroMap 0
-    where
-        countOverlapRec [] n = n
-        countOverlapRec (row:hydroMap) n = countOverlapRec hydroMap (countOverlapRow row n)
-        countOverlapRow [] n = n
-        countOverlapRow (column:row) n
-            | column == "." || column == "1" = countOverlapRow row n
-            | otherwise = countOverlapRow row (n + 1)
+countOverlap :: [[String]] -> Int
+countOverlap hydroMap = length $ dropWhile (\c -> c == "." || c == "1") $ sort $ concat hydroMap
 
 main :: IO ()
 main = do

@@ -12,7 +12,6 @@ fun main(){
     for (d in 1..256){
         counter[9] = counter[0]
         counter[7] += counter[0]
-        counter[0] = 0
         for (f in 1..9){
             counter[f - 1] = counter[f]
         }
