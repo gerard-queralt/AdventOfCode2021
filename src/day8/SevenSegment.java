@@ -26,23 +26,6 @@ public class SevenSegment {
         return countDigitsUniqueSegments;
     }
 
-    private static final Map<Integer, List<String>> digitSegmentDict = initDigitSegmentDic();
-
-    private static Map<Integer, List<String>> initDigitSegmentDic() {
-        Map<Integer, List<String>> digitSegmentDic = new TreeMap<>();
-        digitSegmentDic.put(0, Arrays.asList("a", "b", "c", "e", "f", "g"));
-        digitSegmentDic.put(1, Arrays.asList("c", "f"));
-        digitSegmentDic.put(2, Arrays.asList("a", "c", "d", "e", "g"));
-        digitSegmentDic.put(3, Arrays.asList("a", "c", "d", "f", "g"));
-        digitSegmentDic.put(4, Arrays.asList("b", "c", "d", "f"));
-        digitSegmentDic.put(5, Arrays.asList("a", "b", "d", "f", "g"));
-        digitSegmentDic.put(6, Arrays.asList("a", "b", "d", "e", "f", "g"));
-        digitSegmentDic.put(7, Arrays.asList("a", "c", "f"));
-        digitSegmentDic.put(8, Arrays.asList("a", "b", "c", "d", "e", "f", "g"));
-        digitSegmentDic.put(9, Arrays.asList("a", "b", "c", "d", "f", "g"));
-        return digitSegmentDic;
-    }
-
     private static int part2() throws FileNotFoundException {
         ArrayList<String[][]> inputLines = new ArrayList<>();
         File inputFile = new File(new File("src", "day8").getAbsolutePath() + File.separator + "input.txt");

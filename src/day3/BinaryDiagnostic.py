@@ -1,5 +1,4 @@
 import os
-from functools import reduce
 
 
 def count_zeros_and_ones(list_of_binary_numbers):

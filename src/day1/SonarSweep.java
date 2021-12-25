@@ -1,13 +1,16 @@
 package day1;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class SonarSweep {
-    public static void main(String[] args){
+    public static void main(String[] args) throws FileNotFoundException {
         ArrayList<Integer> input = new ArrayList<>();
-        Scanner in = new Scanner(System.in);
+        File inputFile = new File(new File("src", "day1").getAbsolutePath() + File.separator + "input.txt");
+        Scanner in = new Scanner(inputFile);
 
         while (in.hasNextInt()) { //read input
             input.add(in.nextInt());

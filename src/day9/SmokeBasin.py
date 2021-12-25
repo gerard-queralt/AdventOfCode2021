@@ -57,11 +57,9 @@ def size_of_basin(i, j, visited=None):
 if __name__ == "__main__":
     root = os.path.dirname(__file__)
     path = os.path.join(root, 'input.txt')
-    print(path)
     with open(path, 'r') as input_file:
-        input_list = input_file.readlines()
-    input_list = list(map(lambda l: list(map(lambda c: int(c), l.strip('\n'))), input_list))
+        # for each line we remove the line break and cast each number to int
+        input_list = list(map(lambda l: list(map(lambda c: int(c), l.strip('\n'))), input_file.readlines()))
 
     print("Part 1: " + str(compute_risk_level()))
-
     print("Part 2: " + str(compute_largest_basins()))

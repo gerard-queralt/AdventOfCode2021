@@ -5,13 +5,13 @@ import java.io.File
 fun main(){
     val inputFile = File(File("src", "day6").absolutePath + File.separator + "input.txt")
     val input = inputFile.useLines { it.first() }.split(",")
-    val school = ArrayList<Lanterfish>()
+    val school = ArrayList<Lanternfish>()
     input.forEach {
-        school.add(Lanterfish(it.toInt()))
+        school.add(Lanternfish(it.toInt()))
     }
 
     //the fish spawned the previous day which will be added at the beginning of the day
-    val newFish = ArrayList<Lanterfish>()
+    val newFish = ArrayList<Lanternfish>()
 
     for (i in 1..80){
         newFish.forEach {
