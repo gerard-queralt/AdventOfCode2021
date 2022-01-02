@@ -7,10 +7,11 @@ class Octopus(var energy: Int) {
         energy++
     }
 
-    fun maybeFlash() {
+    fun maybeFlash() : Boolean {
         if (energy > 9) {
             flashedThisStep = true
         }
+        return flashedThisStep
     }
 
     fun reset() {
